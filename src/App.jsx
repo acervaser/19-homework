@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Contacts from './components/Contacts';
 const initContacts = [{
@@ -33,23 +33,57 @@ const initContacts = [{
   gender: "male"
 }];
 function App() {
- const [contacts, setContacts] = useState(initContacts);
- const [search, setSearch] = useState("")
-
- const handleSearchChange = (e) =>{
-  setSearch(e.target.value)
- }
- const filterContacts = (search) =>{
-  setContacts(
-    contacts.filter((contact) =>{
-return contact.firstName === search;
-  }))
- }
+  const [contacts, setContacts] = useState(initContacts);
+console.log(initContacts)
+  const handleSearchChange = (e) => {
+    
+    if(e.target.value === ""){
+      setContacts(
+        initContacts)
+    
+  } if(e.target.value === "ж"){
+    setContacts(
+      contacts.filter((contact) => {
+     return  contact.gender === "female"
+    }))
+  }if(e.target.value !== ""){
+    setContacts(
+      contacts.filter((contact) => {
+        return contact.firstName.indexOf(e.target.value) !== -1 ||
+          contact.firstName.toLowerCase().indexOf(e.target.value) !== -1 ||
+          contact.lastName.indexOf(e.target.value) !== -1 ||
+          contact.lastName.toLowerCase().indexOf(e.target.value) !== -1 ||
+          contact.phone.indexOf(e.target.value) !== -1
+      }))
+  }
+}
+  const handleFemaleFilter = () => {
+    
+    setContacts(
+      contacts.filter((contact) => {
+     return  contact.gender !== "female"
+    }))
+  }
+    const handleMaleFilter = () =>{
+      setContacts(
+        contacts.filter((contact) => {
+       return  contact.gender !== "male"
+      }))
+  }
+  const handleAnonymusFilter = () =>{
+    setContacts(
+      contacts.filter((contact) => {
+     return contact.gender !== undefined
+    }))
+}
   return (
     <div className="App">
-      <input value={search} onChange={handleSearchChange}/>
-     <Contacts contacts={contacts} onChange={filterContacts}/>
-    
+      Ж<input type="checkbox"onChange={handleFemaleFilter} checked/>
+      Ч<input type="checkbox"onChange={handleMaleFilter} checked/>
+      А<input type="checkbox"onChange={handleAnonymusFilter} checked/>
+      <input type="search" placeholder="Search contact" onChange={handleSearchChange} />
+      <Contacts contacts={contacts}/>
+
     </div>
   );
 }
