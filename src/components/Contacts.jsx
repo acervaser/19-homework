@@ -6,7 +6,7 @@ const Contacts = function ({ contacts }) {
         <div>
             {
                 contacts.map((contact) => {
-                    return <Contact firstName={contact.firstName} lastName={contact.lastName} phone={contact.phone} gender={contact.gender} />
+                    return <Contact firstName={contact.firstName} lastName={contact.lastName} phone={contact.phone} gender={contact.gender} key={contact.firstName} />
                 })}
         </div>
     )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Contacts from './components/Contacts';
 const initContacts = [{
@@ -32,13 +32,24 @@ const initContacts = [{
   phone: "+380956319521",
   gender: "male"
 }];
-
 function App() {
-  const [contacts, setContacts] = useState(initContacts); 
+ const [contacts, setContacts] = useState(initContacts);
+ const [search, setSearch] = useState("")
 
+ const handleSearchChange = (e) =>{
+  setSearch(e.target.value)
+ }
+ const filterContacts = (search) =>{
+  setContacts(
+    contacts.filter((contact) =>{
+return contact.firstName === search;
+  }))
+ }
   return (
     <div className="App">
-     <Contacts contacts={contacts}/>
+      <input value={search} onChange={handleSearchChange}/>
+     <Contacts contacts={contacts} onChange={filterContacts}/>
+    
     </div>
   );
 }
