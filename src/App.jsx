@@ -79,12 +79,12 @@ function App() {
   return (
     <div className="App">
        <input className="input" type="search" placeholder="Search contact" onChange={handleSearchChange} />
-       <p>Жінки</p>
-        <input type="checkbox" className="checkbox-input" onChange={handleFemaleFilter} checked />
-        <p>Чоловіки</p>
-        <input type="checkbox" className="checkbox-input" onChange={handleMaleFilter} checked />
-        <p>Невизначено</p>
-        <input type="checkbox" className="checkbox-input" onChange={handleAnonymusFilter} checked />
+       <p>Без жінок</p>
+        <input type="checkbox" className="checkbox-input" onChange={handleFemaleFilter}  />
+        <p>Без чоловіків</p>
+        <input type="checkbox" className="checkbox-input" onChange={handleMaleFilter}  />
+        <p>Без Анонімуса</p>
+        <input type="checkbox" className="checkbox-input" onChange={handleAnonymusFilter} />
       <Contacts contacts={contacts} />
 
     </div>
