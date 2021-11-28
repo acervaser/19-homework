@@ -34,55 +34,58 @@ const initContacts = [{
 }];
 function App() {
   const [contacts, setContacts] = useState(initContacts);
-console.log(initContacts)
+  console.log(initContacts)
   const handleSearchChange = (e) => {
-    
-    if(e.target.value === ""){
+
+    if (e.target.value === "") {
       setContacts(
         initContacts)
-    
-  } if(e.target.value === "ж"){
-    setContacts(
-      contacts.filter((contact) => {
-     return  contact.gender === "female"
-    }))
-  }if(e.target.value !== ""){
-    setContacts(
-      contacts.filter((contact) => {
-        return contact.firstName.indexOf(e.target.value) !== -1 ||
-          contact.firstName.toLowerCase().indexOf(e.target.value) !== -1 ||
-          contact.lastName.indexOf(e.target.value) !== -1 ||
-          contact.lastName.toLowerCase().indexOf(e.target.value) !== -1 ||
-          contact.phone.indexOf(e.target.value) !== -1
-      }))
-  }
-}
-  const handleFemaleFilter = () => {
-    
-    setContacts(
-      contacts.filter((contact) => {
-     return  contact.gender !== "female"
-    }))
-  }
-    const handleMaleFilter = () =>{
+
+    } if (e.target.value === "ж") {
       setContacts(
         contacts.filter((contact) => {
-       return  contact.gender !== "male"
-      }))
+          return contact.gender === "female"
+        }))
+    } if (e.target.value !== "") {
+      setContacts(
+        contacts.filter((contact) => {
+          return contact.firstName.indexOf(e.target.value) !== -1 ||
+            contact.firstName.toLowerCase().indexOf(e.target.value) !== -1 ||
+            contact.lastName.indexOf(e.target.value) !== -1 ||
+            contact.lastName.toLowerCase().indexOf(e.target.value) !== -1 ||
+            contact.phone.indexOf(e.target.value) !== -1
+        }))
+    }
   }
-  const handleAnonymusFilter = () =>{
+  const handleFemaleFilter = () => {
+
     setContacts(
       contacts.filter((contact) => {
-     return contact.gender !== undefined
-    }))
-}
+        return contact.gender !== "female"
+      }))
+  }
+  const handleMaleFilter = () => {
+    setContacts(
+      contacts.filter((contact) => {
+        return contact.gender !== "male"
+      }))
+  }
+  const handleAnonymusFilter = () => {
+    setContacts(
+      contacts.filter((contact) => {
+        return contact.gender !== undefined
+      }))
+  }
   return (
     <div className="App">
-      Ж<input type="checkbox"onChange={handleFemaleFilter} checked/>
-      Ч<input type="checkbox"onChange={handleMaleFilter} checked/>
-      А<input type="checkbox"onChange={handleAnonymusFilter} checked/>
-      <input type="search" placeholder="Search contact" onChange={handleSearchChange} />
-      <Contacts contacts={contacts}/>
+       <input className="input" type="search" placeholder="Search contact" onChange={handleSearchChange} />
+       <p>Жінки</p>
+        <input type="checkbox" className="checkbox-input" onChange={handleFemaleFilter} checked />
+        <p>Чоловіки</p>
+        <input type="checkbox" className="checkbox-input" onChange={handleMaleFilter} checked />
+        <p>Невизначено</p>
+        <input type="checkbox" className="checkbox-input" onChange={handleAnonymusFilter} checked />
+      <Contacts contacts={contacts} />
 
     </div>
   );
