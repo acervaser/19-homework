@@ -75,8 +75,9 @@ const App_3 = () => {
       <div>
         <div>
           <label>
-            Female
+            Жінки
             <input
+            className="checkbox-input"
               type={"checkbox"}
               name="female"
               checked={genders.female}
@@ -84,8 +85,9 @@ const App_3 = () => {
             />
           </label>
           <label>
-            Male
+            Чоловіки
             <input
+            className="checkbox-input"
               type={"checkbox"}
               name="male"
               checked={genders.male}
@@ -93,8 +95,9 @@ const App_3 = () => {
             />
           </label>
           <label>
-            Unknown
+            Анонімус
             <input
+            className="checkbox-input"
               type={"checkbox"}
               name="unknown"
               checked={genders.unknown}
@@ -102,7 +105,7 @@ const App_3 = () => {
             />
           </label>
         </div>
-        <input value={search} onChange={handleFieldChange} />
+        <input className="input" value={search} onChange={handleFieldChange} />
         {filteredContacts.map((item) => (
           <Contact 
             firstName={item.firstName}

@@ -61,7 +61,7 @@ function App() {
       setContacts([...contacts, ...initContacts.filter((contact) => {
         return contact.gender === e.target.name && (contact.lastName.includes(searchValue) ||
         contact.firstName.includes(searchValue) || contact.phone.includes(searchValue))
-      })])
+      }).sort()])
     }
   }
   return (
