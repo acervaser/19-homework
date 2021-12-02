@@ -15,7 +15,8 @@ const initContacts = [{
 }, {
   firstName: "Анонімний",
   lastName: "Анонімус",
-  phone: "+380666666666"
+  phone: "+380666666666",
+  gender: 'unknown'
 }, {
   firstName: "Лілія",
   lastName: "Олдровна",
@@ -34,57 +35,44 @@ const initContacts = [{
 }];
 function App() {
   const [contacts, setContacts] = useState(initContacts);
-  console.log(initContacts)
+  const [searchValue, setSearchValue] = useState('');
+  const [chosenCheckbox, setChosenCheckbox] = useState([]);
   const handleSearchChange = (e) => {
-
-    if (e.target.value === "") {
-      setContacts(
-        initContacts)
-
-    } if (e.target.value === "ж") {
+      setSearchValue(e.target.value)
+      if(e.target.value === '') {
+        setContacts(initContacts.filter(contact => !chosenCheckbox.includes(contact.gender)))
+      } else {
+        setContacts(
+          contacts.filter((contact) => {
+            return !chosenCheckbox.includes(contact.gender) && (contact.lastName.includes(e.target.value) ||
+            contact.firstName.includes(e.target.value) || contact.phone.includes(e.target.value))
+          }))
+      }
+  }
+  const handleCheckbox = (e) => {
+    if(e.target.checked) {
+      setChosenCheckbox([...chosenCheckbox, e.target.name])
       setContacts(
         contacts.filter((contact) => {
-          return contact.gender === "female"
+          return contact.gender !== e.target.name
         }))
-    } if (e.target.value !== "") {
-      setContacts(
-        contacts.filter((contact) => {
-          return contact.firstName.indexOf(e.target.value) !== -1 ||
-            contact.firstName.toLowerCase().indexOf(e.target.value) !== -1 ||
-            contact.lastName.indexOf(e.target.value) !== -1 ||
-            contact.lastName.toLowerCase().indexOf(e.target.value) !== -1 ||
-            contact.phone.indexOf(e.target.value) !== -1
-        }))
+    } else {
+      setChosenCheckbox(chosenCheckbox.filter(item => item !== e.target.name))
+      setContacts([...contacts, ...initContacts.filter((contact) => {
+        return contact.gender === e.target.name && (contact.lastName.includes(searchValue) ||
+        contact.firstName.includes(searchValue) || contact.phone.includes(searchValue))
+      })])
     }
-  }
-  const handleFemaleFilter = () => {
-
-    setContacts(
-      contacts.filter((contact) => {
-        return contact.gender !== "female"
-      }))
-  }
-  const handleMaleFilter = () => {
-    setContacts(
-      contacts.filter((contact) => {
-        return contact.gender !== "male"
-      }))
-  }
-  const handleAnonymusFilter = () => {
-    setContacts(
-      contacts.filter((contact) => {
-        return contact.gender !== undefined
-      }))
   }
   return (
     <div className="App">
-       <input className="input" type="search" placeholder="Search contact" onChange={handleSearchChange} />
-       <p>Без жінок</p>
-        <input type="checkbox" className="checkbox-input" onChange={handleFemaleFilter}  />
-        <p>Без чоловіків</p>
-        <input type="checkbox" className="checkbox-input" onChange={handleMaleFilter}  />
-        <p>Без Анонімуса</p>
-        <input type="checkbox" className="checkbox-input" onChange={handleAnonymusFilter} />
+       <input className="input" type="search" placeholder="Search contact" onChange={handleSearchChange} value={searchValue}/>
+       <label>Без жінок
+        <input type="checkbox" className="checkbox-input" name="female" onChange={handleCheckbox}/></label>
+        <label>Без чоловіків
+        <input type="checkbox" className="checkbox-input" name="male" onChange={handleCheckbox}/></label>
+        <label>Без Анонімуса
+        <input type="checkbox" className="checkbox-input" name="unknown" onChange={handleCheckbox}/></label>
       <Contacts contacts={contacts} />
 
     </div>
